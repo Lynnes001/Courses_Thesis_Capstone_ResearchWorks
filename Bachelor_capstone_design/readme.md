@@ -17,3 +17,5 @@ Our work focuses on the deep learning algorithm. Steps include feature extractin
 classification. We use the neural network to train the classification model. The final result is 
 represented as an Android application with functions ofreal-time sampling, test and provide a 
 friendly interface. The accuracy of the classification model is around 96%.
+
+![](./fig.png)
