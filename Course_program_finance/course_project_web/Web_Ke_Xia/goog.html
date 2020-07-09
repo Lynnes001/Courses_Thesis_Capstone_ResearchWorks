@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./amcharts/style.css"	type="text/css">
+
+  <script src="./amcharts/amcharts.js" type="text/javascript"></script>
+  <script src="./amcharts/serial.js" type="text/javascript"></script>
+  <script src="./amcharts/amstock.js" type="text/javascript"></script>
+
+  <script>
+    AmCharts.ready(function () {
+      generateMainChartData();
+      createStockChart();
+    });
+
+    //chart paras
+    var chart;
+    var chartVR;
+    var chartK;
+    var chartD;
+    var chartMACD;
+    //chart data
+    var chartData = [];
+
+    //panel paras
+    var newPanel;
+    var stockPanel;
+
+    function generateMainChartData() {
+      var firstDate = new Date();
+      firstDate.setHours(0, 0, 0, 0);
+      firstDate.setDate(firstDate.getDate() - 2000);
+
+      for (var i = 0; i < 2000; i++) {
+        var newDate = new Date(firstDate);
+
+        newDate.setDate(newDate.getDate() + i);
+
+        var open = Math.round(Math.random() * (30) + 100);
+        var close = open + Math.round(Math.random() * (15) - Math.random() * 10);
+
+        var low;
+        if (open < close) {
+          low = open - Math.round(Math.random() * 5);
+        } else {
+          low = close - Math.round(Math.random() * 5);
+        }
+
+        var high;
+        if (open < close) {
+          high = close + Math.round(Math.random() * 5);
+        } else {
+          high = open + Math.round(Math.random() * 5);
+        }
+        var volume = Math.round(Math.random() * (1000 + i)) + 100 + i;
+        var volumeRatio = Math.round(Math.random() * 5) + 20;
+        var MACD = Math.round(Math.random() * 5) + 30;
+        var K = Math.round(Math.random() * 5) + 10;
+        var D = Math.round(Math.random() * 5) + 10;
+
+        chartData[i] = ({
+          date: newDate,
+          open: open,
+          close: close,
+          high: high,
+          low: low,
+          volume: volume,
+          volumeRatio: volumeRatio,
+          K: K,
+          D: D,
+          MACD: MACD
+        });
+      }
+    }
+
+    function createStockChart() {
+      chart = new AmCharts.AmStockChart();
+
+      chart.balloon.horizontalPadding = 13;
+
+      // DATASET //////////////////////////////////////////
+      var dataSet = new AmCharts.DataSet();
+      dataSet.fieldMappings = [{
+        fromField: "open",
+        toField: "open"
+      }, {
+        fromField: "close",
+        toField: "close"
+      }, {
+        fromField: "high",
+        toField: "high"
+      }, {
+        fromField: "low",
+        toField: "low"
+      }, {
+        fromField: "volume",
+        toField: "volume"
+      }, {
+        fromField: "value",
+        toField: "value"
+      }, {
+        fromField: "volumeRatio",
+        toField: "volumeRatio"
+      }, {
+        fromField: "K",
+        toField: "K"
+      }, {
+        fromField: "D",
+        toField: "D"
+      }, {
+        fromField: "MACD",
+        toField: "MACD"
+      }];
+      dataSet.color = "#7f8da9";
+      dataSet.dataProvider = chartData;
+      dataSet.categoryField = "date";
+      chart.dataSets = [dataSet];
+  
+      // PANELS ///////////////////////////////////////////
+      stockPanel = new AmCharts.StockPanel();
+      stockPanel.title = "Value";
+			stockPanel.percentHeight = 200;
+
+      // graph of first stock panel
+      var graph = new AmCharts.StockGraph();
+      graph.type = "candlestick";
+      graph.openField = "open";
+      graph.closeField = "close";
+      graph.highField = "high";
+      graph.lowField = "low";
+      graph.valueField = "close";
+      graph.lineColor = "#7f8da9";
+      graph.fillColors = "#7f8da9";
+      graph.negativeLineColor = "#db4c3c";
+      graph.negativeFillColors = "#db4c3c";
+      graph.fillAlphas = 1;
+      graph.balloonText = "open:<b>[[open]]</b><br>close:<b>[[close]]</b><br>low:<b>[[low]]</b><br>high:<b>[[high]]</b>";
+      graph.useDataSetColors = false;
+
+      //create stock legent
+      var stockLegend = new AmCharts.StockLegend();
+      stockLegend.markerType = "none";
+      stockLegend.markerSize = 0;
+      stockLegend.valueTextRegular = undefined;
+      stockLegend.valueWidth = 250;
+    
+      stockPanel.stockLegend = stockLegend;
+      
+      stockPanel.addStockGraph(graph);
+
+      //second stock panel
+			var stockPanel2 = new AmCharts.StockPanel();
+			stockPanel2.title = "Volume Ratio";
+			stockPanel2.percentHeight = 40;
+
+      var graphVR = new AmCharts.StockGraph();
+      graphVR.valueField = "volumeRatio";
+			graphVR.lineThickness = 2;
+      graphVR.balloonText = "VolumeRatio<br>[[volumeRatio]]";
+
+			var stockLegend2 = new AmCharts.StockLegend();
+			stockLegend2.periodValueTextRegular = "[[value.close]]";
+			stockLegend2.labelText = "";
+			stockLegend2.markerType = "none";
+			stockPanel2.stockLegend = stockLegend2;
+
+			stockPanel2.addStockGraph(graphVR);
+
+      //third stock legent
+			var stockPanel3 = new AmCharts.StockPanel();
+			stockPanel3.title = "MACD";
+			stockPanel3.percentHeight = 40;
+
+      var graphMACD = new AmCharts.StockGraph();
+      graphMACD.valueField = "MACD";
+			graphMACD.lineThickness = 2;
+      graphMACD.balloonText = "MACD<br>[[MACD]]";
+
+			var stockLegend3 = new AmCharts.StockLegend();
+			stockLegend3.periodValueTextRegular = "[[value.close]]";
+			stockLegend3.labelText = "";
+			stockLegend3.markerType = "none";
+			stockPanel3.stockLegend = stockLegend3;
+
+      stockPanel3.addStockGraph(graphMACD);
+      
+
+      //fourth stock panel
+			var stockPanel4 = new AmCharts.StockPanel();
+			stockPanel4.title = "Stochastic Oscillators";
+			stockPanel4.percentHeight = 40;
+
+      var graphK = new AmCharts.StockGraph();
+      graphK.valueField = "K";
+			graphK.lineThickness = 2;
+      graphK.balloonText = "K<br>[[K]]";
+
+      var graphD = new AmCharts.StockGraph();
+      graphD.valueField = "D";
+			graphD.lineThickness = 2;
+      graphD.balloonText = "D<br>[[D]]";
+
+			var stockLegend4 = new AmCharts.StockLegend();
+			stockLegend4.periodValueTextRegular = "[[value.close]]";
+			stockLegend4.labelText = "";
+			stockLegend4.markerType = "none";
+			stockPanel4.stockLegend = stockLegend4;   
+
+      stockPanel4.addStockGraph(graphK);   
+      stockPanel4.addStockGraph(graphD);   
+
+      chart.panels = [stockPanel, stockPanel2, stockPanel3, stockPanel4];
+
+      // OTHER SETTINGS ////////////////////////////////////
+      var sbsettings = new AmCharts.ChartScrollbarSettings();
+      sbsettings.graph = graph;
+      sbsettings.graphType = "line";
+      sbsettings.usePeriod = "WW";
+      chart.chartScrollbarSettings = sbsettings;
+
+      // Enable pan events
+      var panelsSettings = new AmCharts.PanelsSettings();
+      //panelsSettings.panEventsEnabled = true;
+      chart.panelsSettings = panelsSettings;
+
+      // CURSOR
+      var cursorSettings = new AmCharts.ChartCursorSettings();
+      cursorSettings.valueBalloonsEnabled = true;
+      cursorSettings.fullWidth = true;
+      cursorSettings.cursorAlpha = 0.1;
+      chart.chartCursorSettings = cursorSettings;
+
+      // PERIOD SELECTOR ///////////////////////////////////
+      var periodSelector = new AmCharts.PeriodSelector();
+      periodSelector.position = "bottom";
+      periodSelector.periods = [ {
+        period: "DD",
+        count: 10,
+        label: "10 day"
+      }, {
+        period: "MM",
+        count: 1,
+        label: "1 month"
+      }, {
+        period: "MM",
+        selected: true,
+        count: 6,
+        label: "6 month"
+      }, {
+        period: "YYYY",
+        count: 1,
+        label: "1 year"
+      },];
+      chart.periodSelector = periodSelector;
+      chart.write('chartdiv');
+    }
+
+    function addPanel() {
+      newPanel = new AmCharts.StockPanel();
+      newPanel.allowTurningOff = true;
+      newPanel.title = "Volume";
+      newPanel.showCategoryAxis = false;
+
+      // var graph = new AmCharts.StockGraph();
+      // graph.type = "Column";
+      // graph.valueField = "volume";
+      // newPanel.addStockGraph(graph);
+
+      var legend = new AmCharts.StockLegend();
+      legend.markerType = "none";
+      legend.markerSize = 0;
+      newPanel.stockLegend = legend;
+
+      chart.addPanelAt(newPanel, 1);
+      chart.validateNow();
+
+      document.getElementById("addPanelButton").disabled = true;
+      document.getElementById("removePanelButton").disabled = false;
+    }
+
+    function removePanel() {
+      chart.removePanel(newPanel);
+      chart.validateNow();
+
+      document.getElementById("addPanelButton").disabled = false;
+      document.getElementById("removePanelButton").disabled = true;
+    }
+
+
+  //<!--===================== ！！！！！！！！！！！！！！！！！！！实时更新，代码未实现！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！ ==========================-->
+  
+    function changeRealTimePrice() {
+      ////////////////每2秒请求一次数据
+              //定时刷新，时间间隔为3s
+      setInterval("startRequest()",30000);
+
+      function startRequest(){
+        loadlist();//需要定时重新加载的函数。
+      };
+
+      function loadlist() {
+        updateRealtimePriceOfEachStock()
+}
+      var price="1000";
+      document.getElementById("price").innerHTML=price;
+    }  
+  //<!--===================== ！！！！！！！！！！！！！！！！！！！实时更新，代码未实现！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！ ==========================-->
+
+    function search(str) 
+    {
+      var url = self.location.href
+      var start = url.split('goog')[0]
+      var page = start+str+'.html';
+      //alert(page);
+      window.open(page);
+    }
+
+  </script>
+
+  <title>Finance</title>
+
+  <!-- ========== Css Files ========== -->
+  <link href="css/root.css" rel="stylesheet">
+
+</head>
+
+<body onload="changeRealTimePrice()">
+
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START TOP -->
+<div id="top" class="clearfix">
+
+  <!-- Start App Logo -->
+  <div class="applogo">
+    <a href="index.html" class="logo">Finance</a>
+  </div>
+  <!-- End App Logo -->
+
+  <!-- Start Sidebar Show Hide Button -->
+  <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+  <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+  <!-- End Sidebar Show Hide Button -->
+
+    <!-- Start Searchbox -->
+    <form class="searchform">
+      <input type="text" class="searchbox" id="searchbox" placeholder="Search" onchange="search(this.value)">
+      <span class="searchbutton"><i class="fa fa-search"></i></span>
+    </form>
+    <!-- End Searchbox -->  
+
+</div>
+<!-- END TOP -->
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START SIDEBAR -->
+<div class="sidebar clearfix">
+    <ul class="sidebar-panel nav">
+      <li class="sidetitle">MAIN</li>
+      <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>MainPage</a></li>
+      <li><a href="#"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Stock<span class="caret"></span></a>
+        <ul>
+          <li><a href="goog.html">GOOG</a></li>
+          <li><a href="aaba.html">AABA</a></li>
+          <li><a href="csco.html">CSCO</a></li>
+          <li><a href="t.html">T</a></li>
+          <li><a href="wmt.html">WMT</a></li>
+          <li><a href="nok.html">NOK</a></li>
+          <li><a href="nflx.html">NFLX</a></li>
+          <li><a href="apa.html">APA</a></li>
+          <li><a href="nke.html">NKE</a></li>
+          <li><a href="ge.html">GE</a></li>
+        </ul>
+      </li>
+      <li><a href="prediction.html"><span class="icon color7"><i class="fa fa-flask"></i></span>Prediction</a></li>
+    </ul>
+  </div>
+<!-- END SIDEBAR -->
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTENT -->
+<div class="content">
+  <!-- Start Page Header -->
+  <div class="page-header">
+      <h1 class="title">GOOG</h1>
+        <ol class="breadcrumb">
+          <li><a href="index.html">Main</a></li>
+          <li><a href="#">Stock</a></li>
+          <li class="active">GOOG</li>
+        </ol>
+    </div>
+    <!-- End Page Header -->
+  <!-- Start Presentation -->
+  <div class="row presentation">
+    <div class="col-lg-8 col-md-6 titles">
+      <h1>GOOG</h1>
+      <h5>Alphabet Inc.</h5>
+      <!-- here to add current price-->
+      <!--===================== ！！！！！！！！！！！！！！！！！！！实时更新，代码未实现！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！ ==========================-->
+      <h4 id="price"><b>$1027.0</b></h4>
+      <!--===================== ！！！！！！！！！！！！！！！！！！！实时更新，代码未实现！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！ ==========================-->
+    </div>  
+  </div>
+  <!-- End Presentation -->
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTAINER -->
+  <div class="container-padding">
+
+
+  <!-- Start Flot Chart -->
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-title">
+          Chart
+        </div>
+          <div class="panel-default">
+          <div id="chartdiv" style="width:100%; height:1000px;"></div>
+        </div>
+      </div>
+    </div>   
+  </div>
+  <!-- End Flot Chart -->
+
+  </div>
+</div>
+<!-- END CONTAINER -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+<!-- Start Footer -->
+<div class="row footer">
+  <div class="col-md-6 text-left">
+  Copyright © 2018. 568 Project Team #5</a> All rights reserved.
+  </div>
+</div>
+<!-- End Footer -->
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="js/plugins.js"></script>
+
+<!-- ================================================
+Sparkline
+================================================ -->
+<!-- main file -->
+<script type="text/javascript" src="js/sparkline/sparkline.js"></script>
+<!-- demo codes -->
+<script type="text/javascript" src="js/sparkline/sparkline-plugin.js"></script>
+
+<!-- ================================================
+Rickshaw
+================================================ -->
+<!-- d3 -->
+<script src="js/rickshaw/d3.v3.js"></script>
+<!-- main file -->
+<script src="js/rickshaw/rickshaw.js"></script>
+<!-- demo codes -->
+<script src="js/rickshaw/rickshaw-plugin.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance</title>
+
+  <!-- ========== Css Files ========== -->
+  <link href="css/root.css" rel="stylesheet">
+  <link rel="stylesheet" href="./amcharts/style.css"	type="text/css">
+  <!-- ========== Javascript Files ========== -->
+  <script src="./amcharts/amcharts.js" type="text/javascript"></script>
+  <script src="./amcharts/serial.js" type="text/javascript"></script>
+  <script src="./amcharts/amstock.js" type="text/javascript"></script>
+  <script>
+    /////////////////////////////用于显示预测值，未完成！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    function doPrediction(str) 
+    {
+      //1.str为获取的股票代码，例如GOOG
+      //2.通过str向服务器申请数据，返回三个预测值
+      //3.输出预测值
+      var bayes="$234";
+      var svm="$21";
+      var ann="$34";
+      var current="$34";
+      var rec="hold";
+      
+      document.getElementById("2-0").innerHTML=current;
+      document.getElementById("2-1").innerHTML=bayes;
+      document.getElementById("2-2").innerHTML=svm;
+      document.getElementById("2-3").innerHTML=ann;
+      document.getElementById("2-4").innerHTML=rec;
+    }
+    /////////////////////////////用于显示预测值，未完成！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+    function search(str) 
+    {
+      var url = self.location.href
+      var start = url.split('prediction')[0]
+      var page = start+str+'.html';
+      //alert(page);
+      window.open(page);
+    }
+
+  </script>
+  </head>
+  <body>
+  <!-- //////////////////////////////////////////////////////////////////////////// --> 
+   <!-- START TOP -->
+   <div id="top" class="clearfix">
+ 
+     <!-- Start App Logo -->
+     <div class="applogo">
+       <a href="index.html" class="logo">Finance</a>
+     </div>
+     <!-- End App Logo -->
+ 
+     <!-- Start Sidebar Show Hide Button -->
+     <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+     <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+     <!-- End Sidebar Show Hide Button -->
+ 
+    <!-- Start Searchbox -->
+    <form class="searchform">
+      <input type="text" class="searchbox" id="searchbox" placeholder="Search Stock" onchange="search(this.value)">
+      <span class="searchbutton"><i class="fa fa-search"></i></span>
+    </form>
+    <!-- End Searchbox -->
+
+   </div>
+   <!-- END TOP -->
+  <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ 
+ 
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+ <!-- START SIDEBAR -->
+ <div class="sidebar clearfix">
+  <ul class="sidebar-panel nav">
+    <li class="sidetitle">MAIN</li>
+    <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>MainPage</a></li>
+    <li><a href="#"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Stock<span class="caret"></span></a>
+      <ul>
+        <li><a href="goog.html">GOOG</a></li>
+        <li><a href="aaba.html">AABA</a></li>
+        <li><a href="csco.html">CSCO</a></li>
+        <li><a href="t.html">T</a></li>
+        <li><a href="wmt.html">WMT</a></li>
+        <li><a href="nok.html">NOK</a></li>
+        <li><a href="nflx.html">NFLX</a></li>
+        <li><a href="apa.html">APA</a></li>
+        <li><a href="nke.html">NKE</a></li>
+        <li><a href="ge.html">GE</a></li>
+      </ul>
+    </li>
+    <li><a href="prediction.html"><span class="icon color7"><i class="fa fa-flask"></i></span>Prediction</a></li>
+  </ul>
+</div>
+ <!-- END SIDEBAR -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTENT -->
+<div class="content">
+
+  <!-- Start Page Header -->
+  <div class="page-header">
+    <h1 class="title">Prediction Methods</h1>
+      <ol class="breadcrumb">
+        <li><a href="index.html">Main</a></li>
+        <li><a href="#">Prediction</a></li>
+        <li class="active">Prediction Methods</li>
+      </ol>
+  </div>
+  <!-- End Page Header -->
+
+    <!-- Start Presentation -->
+    <div class="row presentation">
+
+        <div class="col-lg-8 col-md-6 titles">
+          <span class="icon color5-bg"><i class="fa fa-thumbs-o-up"></i></span>
+          <h1>Predict Tomorrow Price</h1>
+          <h4>Three Prediction Methods to forecast the stock Price.</h4>
+          <ul>
+            <li>Bayes: short term prediction method.</li>
+            <li>SVM: long term prediction method.</li>
+            <li>ANN: long term prediction method.</li>
+          </ul>
+        </div>
+    
+    
+      </div>
+      <!-- End Presentation -->
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTAINER -->
+<div class="container-padding">
+  <!-- Start Row -->
+  <div class="row">
+
+    <!-- Start Panel -->
+    <div class="row">
+        <!-- Start lower stock than selection-->
+        <div class="col-md-12">
+          <div class="panel panel-widget">
+              <!-- start selection bar -->
+              <div class="form-group">
+                  <label class="col-sm-4 control-label form-label">Choose a Stock to Do Prediction</label>
+                  <select class="selectpicker" onchange="doPrediction(this.value)">
+                        <option id="4-1" value="GOOG">GOOG</option>
+                        <option id="4-2" value="AABA">AABA</option>
+                        <option id="4-3" value="CSCO">CSCO</option>
+                        <option id="4-4" value="T">T</option>
+                        <option id="4-5" value="WMT">WMT</option>
+                        <option id="4-6" value="NOK">NOK</option>
+                        <option id="4-7" value="NFLX">NFLX</option>
+                        <option id="4-8" value="APA">APA</option>
+                        <option id="4-9" value="NKE">NKE</option>
+                        <option id="4-10" value="GE">GE</option>
+                  </select>
+              </div>
+              <!-- end selection bar -->
+              <div class="form-group">
+                    <table class="table table-dic table-hover ">
+                        <tbody>
+                            <tr>
+                                <td>Today's Price</td>
+                                <td class="text-r"  id="2-0">24.5</td>
+                              </tr>
+                          <tr>
+                            <td>Bayes Prediction</td>
+                            <td class="text-r"  id="2-1">24.5</td>
+                          </tr>
+                          <tr>
+                            <td>SVM Prediction</td>
+                            <td class="text-r" id="2-2">25.5</td>
+                          </tr>
+                          <tr>
+                            <td>ANN Prediction</td>
+                            <td class="text-r" id="2-3">26.5</td>
+                          </tr>
+                          <tr>
+                              <td>Recommendation</td>
+                              <td class="text-r" id="2-4">sell</td>
+                            </tr>
+                        </tbody> 
+                    </table>              
+              </div>
+          </div>
+        </div>
+
+      </div>
+    <!-- End Panel -->
+
+  </div>
+  <!-- End Row -->
+
+
+</div>
+<!-- END CONTAINER -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+<!-- Start Footer -->
+<div class="row footer">
+  <div class="col-md-6 text-left">
+  Copyright © 2018. 568 Project Team #5 All rights reserved.
+  </div>
+</div>
+<!-- End Footer -->
+
+
+</div>
+<!-- End Content -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="js/plugins.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance</title>
+  <script>
+    function MyAutoRun() {
+    updateLowestPriceOfEachStock();
+    updateAveragePriceOfEachStock();
+    updateHighestPriceOfEachStock();
+    updateRealtimePriceOfEachStock();
+    updateLowerThanLowestPriceOfSelectedStock(this.value);
+  }
+
+     function search(str) 
+    {
+      var url = self.location.href
+      var start = url.split('index')[0]
+      var page = start+str+'.html';
+      //alert(page);
+      window.open(page);
+    }
+
+  //定时刷新，时间间隔为3s
+  setInterval("startRequest()",30000);
+
+  function startRequest(){
+    loadlist();//需要定时重新加载的函数。
+  };
+
+  function loadlist() {
+    updateRealtimePriceOfEachStock()
+  }
+  </script>
+
+  <!-- ========== Css Files ========== -->
+  <link href="css/root.css" rel="stylesheet">
+
+  </head>
+
+  <body onload="MyAutoRun()">
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+  <!-- START TOP -->
+  <div id="top" class="clearfix">
+
+    <!-- Start App Logo -->
+    <div class="applogo">
+      <a href="index.html" class="logo">Finance</a>
+    </div>
+    <!-- End App Logo -->
+
+    <!-- Start Sidebar Show Hide Button -->
+    <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+    <!-- End Sidebar Show Hide Button -->
+
+    <!-- Start Searchbox -->
+    <form class="searchform">
+      <input type="text" class="searchbox" id="searchbox" placeholder="Search" onchange="search(this.value)">
+      <span class="searchbutton"><i class="fa fa-search"></i></span>
+    </form>
+    <!-- End Searchbox -->
+
+  </div>
+  <!-- END TOP -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START SIDEBAR -->
+<div class="sidebar clearfix">
+    <ul class="sidebar-panel nav">
+      <li class="sidetitle">MAIN</li>
+      <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>MainPage</a></li>
+      <li><a href="#"><span class="icon color8"><i class="fa fa-bar-chart"></i></span>Stock<span class="caret"></span></a>
+        <ul>
+          <li><a href="goog.html">GOOG</a></li>
+          <li><a href="aaba.html">AABA</a></li>
+          <li><a href="csco.html">CSCO</a></li>
+          <li><a href="t.html">T</a></li>
+          <li><a href="wmt.html">WMT</a></li>
+          <li><a href="nok.html">NOK</a></li>
+          <li><a href="nflx.html">NFLX</a></li>
+          <li><a href="apa.html">APA</a></li>
+          <li><a href="nke.html">NKE</a></li>
+          <li><a href="ge.html">GE</a></li>
+        </ul>
+      </li>
+      <li><a href="prediction.html"><span class="icon color7"><i class="fa fa-flask"></i></span>Prediction</a></li>
+    </ul>
+  </div>
+<!-- END SIDEBAR -->
+<!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTENT -->
+<div class="content">
+
+  <!-- Start Page Header -->
+  <div class="page-header">
+    <h1 class="title">Welcome to Finance</h1>
+      <ol class="breadcrumb">
+        <li class="active">We provide real-time overview & analysis of stocks and prediction stratergies.</li>
+    </ol>
+
+  </div>
+  <!-- End Page Header -->
+
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+<!-- START CONTAINER -->
+<div class="container-widget">
+
+  <!-- Start Top Stats -->
+  <div class="col-md-12">
+  <ul class="topstats clearfix">
+    <li class="arrow"></li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">GOOG</span>
+      <h3 id="0-1">$36.45</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">AABA</span>
+      <h3 id="0-2">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">CSCO</span>
+      <h3 id="0-3">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">T</span>
+      <h3 id="0-4">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">WMT</span>
+      <h3 id="0-5">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">NOK</span>
+      <h3 id="0-6">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">NFLX</span>
+      <h3 id="0-7">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">APA</span>
+      <h3 id="0-8">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">NKE</span>
+      <h3 id="0-9">$96.25</h3>
+    </li>
+    <li class="col-xs-6 col-lg-2">
+      <span class="title">GE</span>
+      <h3 id="0-10">$96.25</h3>
+    </li>
+  </ul>
+  </div>
+  <!-- End Top Stats -->
+
+  <!-- Start First Row -->
+  <div class="row">
+    <!-- Start highest Prices -->
+    <div class="col-md-12 col-lg-5" style="width:33.3%">     
+      <div class="panel panel-widget" style="height:610px;width:auto;">
+        <div class="panel-title">
+          Highest Price in 10 Days
+        </div>
+        <div class="panel-body table-responsive">
+
+          <table class="table table-dic table-hover ">
+            <tbody>
+              <tr>
+                <td>GOOG</td>
+                <td class="text-r" id="1-1">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>AABA</td>
+                <td class="text-r" id="1-2">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>CSCO</td>
+                <td class="text-r" id="1-3">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>T</td>
+                <td class="text-r" id="1-4">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>WMT</td>
+                <td class="text-r" id="1-5">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>NOK</td>
+                <td class="text-r" id="1-6">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>NFLX</td>
+                <td class="text-r" id="1-7">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>APA</td>
+                <td class="text-r" id="1-8">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>NKE</td>
+                <td class="text-r" id="1-9">27/2/2015 12:34 AM</td>
+              </tr>
+              <tr>
+                <td>GE</td>
+                <td class="text-r" id="1-10">27/2/2015 12:34 AM</td>
+              </tr>
+            </tbody>
+          </table>          
+        </div>
+      </div>
+    </div>
+    <!-- End highest Prices -->
+
+    <!-- Start average Prices -->
+    <div class="col-md-12 col-lg-5" style="width:33.3%">
+      <div class="panel panel-widget" style="height:610px;width:auto">
+        <div class="panel-title">
+          Average Price in One Year
+        </div>
+        <div class="panel-body table-responsive">
+            <table class="table table-dic table-hover ">
+                <tbody>
+                  <tr>
+                    <td>GOOG</td>
+                    <td class="text-r"  id="2-1">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>AABA</td>
+                    <td class="text-r" id="2-2">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>CSCO</td>
+                    <td class="text-r" id="2-3">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>T</td>
+                    <td class="text-r" id="2-4">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>WMT</td>
+                    <td class="text-r" id="2-5">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>NOK</td>
+                    <td class="text-r" id="2-6">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>NFLX</td>
+                    <td class="text-r" id="2-7">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>APA</td>
+                    <td class="text-r" id="2-8">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>NKE</td>
+                    <td class="text-r" id="2-9">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>GE</td>
+                    <td class="text-r" id="2-10">27/2/2015 12:34 AM</td>
+                  </tr>
+                </tbody>
+              </table>          
+        </div>
+      </div>
+    </div>
+    <!-- End average Prices -->
+
+    <!-- Start lowest Prices -->
+    <div class="col-md-12 col-lg-5" style="width:33.4%">
+      <div class="panel panel-widget" style="height:610px">
+        <div class="panel-title">
+          Lowest Price in One Year
+        </div>
+        <div class="panel-body table-responsive">
+
+            <table class="table table-dic table-hover ">
+                <tbody>
+                  <tr>
+                    <td>GOOG</td>
+                    <td class="text-r" id="3-1">23.5</td>
+                  </tr>
+                  <tr>
+                    <td>AABA</td>
+                    <td class="text-r" id="3-2">23.5</td>
+                  </tr>
+                  <tr>
+                    <td>CSCO</td>
+                    <td class="text-r" id="3-3">23.5</td>
+                  </tr>
+                  <tr>
+                    <td>T</td>
+                    <td class="text-r" id="3-4">23.5</td>
+                  </tr>
+                  <tr>
+                    <td>WMT</td>
+                    <td class="text-r" id="3-5">23.5</td>
+                  </tr>
+                  <tr>
+                    <td>NOK</td>
+                    <td class="text-r" id="3-6">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>NFLX</td>
+                    <td class="text-r" id="3-7">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>APA</td>
+                    <td class="text-r" id="3-8">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>NKE</td>
+                    <td class="text-r" id="3-9">27/2/2015 12:34 AM</td>
+                  </tr>
+                  <tr>
+                    <td>GE</td>
+                    <td class="text-r" id="3-10">27/2/2015 12:34 AM</td>
+                  </tr>
+                </tbody>
+              </table>       
+        </div>
+      </div>
+    </div>
+    <!-- End lowest Prices -->
+  </div>  
+  <!-- End First Row -->
+
+  <!-- Start Second Row -->
+  <div class="row">
+    <!-- Start lower stock than selection-->
+    <div class="col-md-12">
+      <div class="panel panel-widget" >
+          <div class="panel-title">
+              Lower than Selection Stock          
+          </div>
+          <!-- start selection bar -->
+          <div class="form-group">
+              <label class="col-sm-4 control-label form-label">Choose a Stock</label>
+              <select class="selectpicker" id="select-box" onchange="updateLowerThanLowestPriceOfSelectedStock(this.value)">
+                    <option id="4-1" value="GOOG">GOOG</option>
+                    <option id="4-2" value="AABA">AABA</option>
+                    <option id="4-3" value="CSCO">CSCO</option>
+                    <option id="4-4" value="T">T</option>
+                    <option id="4-5" value="WMT">WMT</option>
+                    <option id="4-6" value="NOK">NOK</option>
+                    <option id="4-7" value="NFLX">NFLX</option>
+                    <option id="4-8" value="APA">APA</option>
+                    <option id="4-9" value="NKE">NKE</option>
+                    <option id="4-10" value="GE">GE</option>
+              </select>
+          </div>
+          <!-- end selection bar -->
+          <!-- Start Panel -->
+          <div class="col-md-12">
+              <div class="panel-title" style="display: inline;">Lowest price is:</div>
+              <div class="panel-title" style="display: inline;" id="ave">123.45</div> 
+              <br>
+            <div class="panel panel-default">
+              <div class="panel-body table-responsive" id="txtHint">
+                <table class="table table-striped" id="ave-table">
+                  <thead>
+                    <tr>
+                      <td>Stock ID</td>
+                      <td>Lowest Price</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="10">
+                      <td id="10-1"></td>
+                      <td id="10-3"></td> 
+                    </tr>                  
+                    <tr id="11">
+                      <td id="11-1"></td>
+                      <td id="11-3"></td>
+                    </tr>
+                    <tr id="12">
+                      <td id="12-1"></td>
+                      <td id="12-3"></td>
+                    </tr>
+                    <tr id="13">
+                      <td id="13-1"></td>
+                      <td id="13-3"></td>
+                    </tr>
+                    <tr id="14">
+                      <td id="14-1"></td>
+                      <td id="14-3"></td>
+                    </tr>
+                    <tr id="15">
+                      <td id="15-1"></td>
+                      <td id="15-3"></td>
+                    </tr>
+                    <tr id="16">
+                      <td id="16-1"></td>
+                      <td id="16-3"></td>
+                    </tr>
+                    <tr id="17">
+                      <td id="17-1"></td>
+                      <td id="17-3"></td>
+                    </tr>
+                    <tr id="18">
+                      <td id="18-1"></td>
+                      <td id="18-3"></td>
+                    </tr>
+                   <tr id="19">
+                     <td id="19-1"></td>
+                     <td id="19-3"></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+      
+            </div>
+          </div>
+          <!-- End Panel -->
+      </div>
+    </div>
+    <!-- Start lower stock than selection-->
+    <div class="col-md-12">
+
+    </div>
+  </div>
+  <!-- End Second Row -->
+
+</div>
+<!-- END CONTAINER -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+<!-- Start Footer -->
+<div class="row footer">
+  <div class="col-md-12 text-left">
+  Copyright &copy; 2018. 568 Project Team #5 All rights reserved.
+  </div>
+</div>
+<!-- End Footer -->
+</div>
+<!-- End Content -->
+ <!-- //////////////////////////////////////////////////////////////////////////// --> 
+
+
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="js/plugins.js"></script>
+
+<!-- ================================================
+Bootstrap Select
+================================================ -->
+<script type="text/javascript" src="js/bootstrap-select/bootstrap-select.js"></script>
+
+<!-- ================================================
+Bootstrap Toggle
+================================================ -->
+<script type="text/javascript" src="js/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+
+
+<!-- ================================================
+Sparkline
+================================================ -->
+<!-- main file -->
+<script type="text/javascript" src="js/sparkline/sparkline.js"></script>
+<!-- demo codes -->
+<script type="text/javascript" src="js/sparkline/sparkline-plugin.js"></script>
+
+
+  <!-- ========== javascript Files ========== -->
+
+
+  <!-- first javascript file start -->
+<script>
+  var host = "http://192.168.1.4:8080"
+  // $.get(host+"/GOOG/realtime", function(result){
+  //   console.log(result)
+  // });
+  $.ajax({
+        url: host+'/GOOG/realtime',
+        type: "GET",
+        dataType: "json",
+        complete: function(data, textStatus, jqXHR) {
+            console.log(data);
+        },
+        success: function (data, textStatus, jqXHR) {
+            console.log(data);
+        }
+    });
+  function updateRealtimePriceOfEachStock(){
+    console.log("in function")
+    $.get(host+"/GOOG/realtime", function(result){
+      console.log(result)
+      $("#0-1").html(result);
+    });
+    $.get(host+"/AABA/realtime", function(result){
+      $("#0-2").html(result);
+    });
+    $.get(host+"/CSCO/realtime", function(result){
+      $("#0-3").html(result);
+    });
+    $.get(host+"/T/realtime", function(result){
+      $("#0-4").html(result);
+    });
+    $.get(host+"/WMT/realtime", function(result){
+      $("#0-5").html(result);
+    });
+    $.get(host+"/NOK/realtime", function(result){
+      $("#0-6").html(result);
+    });
+    $.get(host+"/NFLX/realtime", function(result){
+      $("#0-7").html(result);
+    });
+    $.get(host+"/APA/realtime", function(result){
+      $("#0-8").html(result);
+    });
+    $.get(host+"/NKE/realtime", function(result){
+      $("#0-9").html(result);
+    });
+    $.get(host+"/GE/realtime", function(result){
+      $("#0-10").html(result);
+    });
+  }
+  //var t = setInterval("updateRealtimePriceOfEachStock()", 10000);
+
+
+  // function updateRealtimePriceOfEachStock() {
+  //   //代码未经验证（没有服务器无法验证，仅做参考）
+  //   while(true) {
+  //   if (window.XMLHttpRequest)
+  //     {// code for IE7+, Firefox, Chrome, Opera, Safari
+  //     xmlhttp=new XMLHttpRequest();
+  //     }
+  //   else
+  //     {// code for IE6, IE5
+  //     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  //     }
+  //   xmlhttp.onreadystatechange=function()
+  //     {
+  //     if (xmlhttp.readyState==4 && xmlhttp.status==200)
+  //       {
+  //         for(var i=1;i<=10;i++){
+  //           document.getElementById("0-"+"i").innerHTML=xmlhttp.responseText;  
+  //         }
+  //       }
+  //     }
+  //     //请求数据路径需要修改
+  //   xmlhttp.open("GET","/ajax/getcustomer.asp?q="+str,true);
+  //   xmlhttp.send(); 
+  //   sleep(2000);  //休眠2秒，再次刷新数据
+  //   }
+  // }
+
+  //以下三个函数都未实现实时请求数据
+  function updateHighestPriceOfEachStock() {
+    var highestprice=0;
+    for(var i=1;i<=10;i++) {
+      document.getElementById("1-"+i).innerHTML=highestprice;
+    }
+  }
+
+  function updateLowestPriceOfEachStock() {
+    var lowestprice=1;
+    for(var i=1;i<=10;i++) {
+      document.getElementById("2-"+i).innerHTML=lowestprice;
+    }  
+  }
+
+  function updateAveragePriceOfEachStock() {
+    var aveprice=2;
+    for(var i=1;i<=10;i++) {
+      document.getElementById("3-"+i).innerHTML=aveprice;
+    }  
+  }
+
+  
+  function updateLowerThanLowestPriceOfSelectedStock(str) {
+    var selectedStockPrice= "$233.33";
+    document.getElementById("ave").innerHTML=selectedStockPrice;
+    var id="GOOG";
+    var price="123";
+    var count=6;
+    for (var i=0;i<count;i++) 
+    {
+        document.getElementById("1"+i+"-1").innerHTML=id;
+        document.getElementById("1"+i+"-3").innerHTML=price;       
+    }
+    for(var j=9;j>count;j--)
+    {
+        document.getElementById("1"+j+"-1").innerHTML=" ";
+        document.getElementById("1"+j+"-3").innerHTML=" ";       
+    }
+}
+
+  function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+  }
+  
+</script>
+    <!-- first javascript file end -->
+
+
+</body>
+</html>
