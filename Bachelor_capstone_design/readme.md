@@ -1,7 +1,10 @@
 ### Capstone Design: Visual Sound Assistant
 
 - Group Members: **Song Yang**, Xing Yang, Tong Wu, Ke Xia
-- Abstract: 
+- Advisor: Prof. Yingying Chen
+
+
+**Abstract:** 
 
 As the smartphone becomes popular, we want to apply mobile technology on the hearing problems 
 support area and reach a goal to help them identify what's happening around by analyzing sounds and 
