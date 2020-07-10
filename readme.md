@@ -4,4 +4,4 @@ Archives for following contents of Song Yang:
 - Bachlor capstone design,
 - Master thesiss,
 
-Visit folders for courses.
+Visit folders for details.
