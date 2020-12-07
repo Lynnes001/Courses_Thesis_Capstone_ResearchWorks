@@ -3,7 +3,7 @@
 - Title: Hand-gesture Sensing Leveraging Radio and Vibration Signals
 - Advisor: Dr. Yingying Chen
 - Comittee Members: Dr. Richard Howard, Dr. Chung-Tse Michael Wu
-
+- [FullText](https://github.com/Lynnes001/Courses_Thesis_Capstone_ResearchWorks/blob/master/Master_thesis/master_thesis_Song%20Yang.pdf)
 
 **Abstract:** 
 
