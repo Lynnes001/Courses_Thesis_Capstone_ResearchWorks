@@ -1,7 +1,7 @@
 name: Sync to Gitee on Push
 on: push
 jobs:
-  sync:
+  SyncToGiteeOnPush:
     runs-on: ubuntu-latest
     steps:
       - uses: wearerequired/git-mirror-action@master
