@@ -2,7 +2,13 @@
 
 - Group Members: **Song Yang**, Xing Yang, Tong Wu, Ke Xia
 - Advisor: Prof. Yingying Chen
+- [Project Thesis](./Report_Group#39.pdf)
+- [Presentation Slides](./CapstoneSlides_Group#39.pdf)
+- [Video](./video&demo_Group%2339.mp4?raw=true)
 
+
+**Poster**
+![](./fig_poster.png)
 
 **Abstract:** 
 
