@@ -1,6 +1,7 @@
 ### Master Thesis
 
 - Title: Hand-gesture Sensing Leveraging Radio and Vibration Signals
+- Author: Song Yang
 - Advisor: Dr. Yingying Chen
 - Comittee Members: Dr. Richard Howard, Dr. Chung-Tse Michael Wu
 - [FullText](./master_thesis_Song%20Yang.pdf)
